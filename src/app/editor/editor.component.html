@@ -1,0 +1,54 @@
+<h2>Editor de escuta</h2>
+<div *ngFor=' let report of reports '>
+    <div *ngIf=' report.open '>
+        <h3 class='col-md-12 col-lg-12'>Editando {{report.type}}: {{report.title}}</h3>
+        <div class='form-group col-md-2 col-lg-2' [ngClass]='{"has-error": popAlert && ! validateTime(report), "has-success": validateTime(report)}'>
+            <label>Hora de ar</label>
+            <input [(ngModel)]='report.time' appFormatTime placeholder='ex.: 12:00' class='form-control'>
+            <span *ngIf=' popAlert ' class='help-block'>hh:mm</span>
+        </div>
+        <div class='form-group col-md-4 col-lg-4' [ngClass]='{"has-error": popAlert && ! validateType(report), "has-success": validateType(report)}'>
+            <label>Tipo de reportagem</label>
+            <input [(ngModel)]='report.type' placeholder='ex.: VT, Boletim, Link' class='form-control'>
+            <span *ngIf=' popAlert ' class='help-block'>Obrigatório!</span>
+        </div>
+        <div *ngIf=' report.type.toLowerCase() != "break" '>
+            <div class='form-group col-md-6 col-lg-6' [ngClass]='{"has-error": popAlert && ! validateTitle(report), "has-success": validateTitle(report)}'>
+                <label>Título da reportagem</label>
+                <input [(ngModel)]='report.title' placeholder="ex.: Aumenta/Gás" class='form-control'>
+                <span *ngIf=' popAlert ' class='help-block'>Separado por espaço, barra ou traço</span>
+            </div>
+            <div class='form-group col-md-6 col-lg-6'>
+                <label>Repórter</label>
+                <input [(ngModel)]='report.reporter' placeholder='Nome do repórter' class='form-control'>
+            </div>
+            <div class='form-group col-md-6 col-lg-6'>
+                <label>Local da reportagem</label>
+                <input [(ngModel)]='report.location' placeholder='ex.: Orquidário de Santos' class='form-control'>
+            </div>
+            <div class='form-group col-md-12 col-lg-12'>
+                <label>Entrevistados</label>
+                <input [(ngModel)]='report.interviews' placeholder='ex.: Presidente da República' class='form-control'>
+            </div>
+        </div>
+        <div class='form-group col-md-12 col-lg-12'>
+            <label>Detalhes adicionais:</label>
+            <textarea [(ngModel)]='report.description' class='form-control'></textarea>
+        </div>
+        <div class='form-group col-md-12 col-lg-12'>
+            <button (click)=' close(report) ' class='btn btn-primary'>salvar</button>
+            <button (click)=' delete(report) ' class='btn btn-danger'>excluir</button>
+        </div>
+    </div>
+
+    <div *ngIf=' ! report.open ' (click)=' open(report) ' class='closed-report col-md-12 col-lg-12'>
+        <h3><span *ngIf=' report.time ' class='badge'>{{report.time}}</span> {{report.type}} {{report.title}}</h3>
+        <h4 *ngIf=' report.type.toLowerCase() != "break" && report.location || report.reporter '>{{report.reporter}}<span *ngIf=' report.location && report.reporter  '> | </span>{{report.location}}</h4>
+        <p *ngIf=' report.description '>{{report.description}}</p>
+    </div>
+</div>
+<div class='form-group'>
+    <p class='col-lg-12 col-md-12'>
+        <button (click)=' create() ' class='btn btn-default'>nova reportagem</button>
+    </p>
+</div>

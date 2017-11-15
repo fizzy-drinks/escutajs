@@ -1,0 +1,14 @@
+.link-danger, .text-danger {
+    color: #a22;
+}
+
+.closed-report {
+    padding: .5em 1em;
+    cursor: pointer;
+    transition: background .25s;
+    border-radius: 5px;
+}
+
+.closed-report:hover {
+    background-color: #e0e0ff;
+}
