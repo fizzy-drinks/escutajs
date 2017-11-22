@@ -13,4 +13,3 @@ function update_remote {
 # Task b (for build) is for gh-pages only
 [ "$2" == "b" ] && build
 update_remote $1
-exit
